@@ -1,0 +1,32 @@
+{
+  "name": "cutesy.js",
+  "version": "1.1.3",
+  "description": "a cute color logger",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "node test/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/calemy/cutesy.git"
+  },
+  "keywords": [
+    "console",
+    "color",
+    "logs",
+    "error",
+    "cute"
+  ],
+  "author": "Lemres",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/calemy/cutesy/issues"
+  },
+  "homepage": "https://github.com/calemy/cutesy#readme",
+  "dependencies": {
+    "fs": "^0.0.1-security"
+  }
+}
