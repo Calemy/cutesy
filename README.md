@@ -1,5 +1,6 @@
 # cutesy
 a cute javascript logger with helpful utility <3
+some updates still expected
 
 ## How to use it
 
@@ -45,7 +46,7 @@ logger.send("This text is a debug") // => [Debug] | This text is a debug
 You don't know where the log comes from? add a stack trace!
 
 ```js
-logger.sendTraced("This text got sent with a trace") // => /home/cutesy/project/index.js:10:12
+logger.sendTraced("This text got sent with a trace") // => This text got sent with a trace | /home/cutesy/project/index.js:10:12
 ```
 
 #### Log into files
@@ -67,5 +68,5 @@ const logger = new Logger()
 logger.blue()
 logger.changeName("Info")
 logger.send("This information gets logged into a file")
-logger.save("./log.txt")
+logger.save("./log.txt") //we don't need to define a message since we have a context
 ```
