@@ -38,7 +38,7 @@ logger.send("This text has a timestamp") // => 04:31:05 - This text has a timest
 You can add a prefix to know what type of log you are recieving
 
 ```js
-logger.changeName("Debug")
+logger.changeTag("Debug")
 logger.send("This text is a debug") // => [Debug] | This text is a debug
 ```
 
@@ -67,7 +67,7 @@ const Logger = require('cutesy.js')
 const logger = new Logger()
 
 logger.blue()
-logger.changeName("Info")
+logger.changeTag("Info")
 logger.send("This information gets logged into a file")
 logger.save("./log.txt") //we don't need to define a message since we have a context
 ```

@@ -5,7 +5,7 @@ module.exports = class {
         this.extra = 0
         this.time = ""
         this.message = ""
-        this.name = ""
+        this.tag = ""
     }
 
     addTimestamp(format){
@@ -29,12 +29,14 @@ module.exports = class {
         return this
     }
 
-    sendTraced(message){
+    sendTraced(message, nesting){
+        const n = nesting || 2
         const Object = {};
         try {
             Object.debug();
         } catch(ex) {
-            const trace = ex.stack.split("\n", 3)[2].split("(")[1].split(")")[0]
+            const trace = ex.stack?.split("\n", n + 1)[n]?.split("(")[1]?.split(")")[0]
+            if(!trace) return this.sendTraced(message, n-1)
             return this.send(message + " | " + trace)
         }
     }
@@ -49,8 +51,8 @@ module.exports = class {
         return this
     }
 
-    changeName(name){
-        if(name) this.name = `[${name}] | `
+    changeTag(tag){
+        if(tag) this.tag = `[${tag}] | `
         return this
     }
 
@@ -66,11 +68,11 @@ module.exports = class {
             content = ""
         }
 
-        fs.writeFileSync(path, `${content}${this.name}${this.time}${message}\n`);
+        fs.writeFileSync(path, `${content}${this.tag}${this.time}${message}\n`);
     }
 
     send(message){
-        console.log(`\u001b[${this.extra ? this.extra + ";" : ""}38;5;${this.color}m${this.name}${this.time}${message}\x1b[0m`)
+        console.log(`\u001b[${this.extra ? this.extra + ";" : ""}38;5;${this.color}m${this.tag}${this.time}${message}\x1b[0m`)
         this.message = message
         return this
     }
@@ -142,7 +144,7 @@ module.exports = class {
     reset(){
         this.color = 0
         this.extra = 0
-        this.name = ""
+        this.tag = ""
         this.time = ""
         this.message = ""
         return this

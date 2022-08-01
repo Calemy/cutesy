@@ -7,13 +7,13 @@ export = class Logger {
 
     changeFont(code: number): Logger
 
-    changeName(name: string): Logger
+    changeTag(tag: string): Logger
 
-    save(path: string, message: string | undefined): Logger
+    save(path: string, message?: string): Logger
 
     send(message: string): Logger
 
-    sendTraced(message: string): Logger
+    sendTraced(message: string, nesting?: number): Logger
 
     black(): Logger
 
