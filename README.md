@@ -1,5 +1,6 @@
 # cutesy
 a cute javascript logger with helpful utility <3
+<br>
 some updates still expected
 
 ## How to use it
