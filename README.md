@@ -14,13 +14,28 @@ const logger = new Logger()
 
 #### Change color
 
-You can easily change the color 
+You can easily change the color with our color pallet consitent of currently 15 colors
 
 ```js
-const colors = ["black", "white", "red", "darkGreen", "green", "darkBlue", "blue", "cyan", "lightBlue", "purple", "lightPurple", "yellow", "pink"]
+const colors = [
+    "black", "white", "red", "darkGreen", "green",
+    "darkBlue", "blue", "cyan", "purpleBlue", "lightBlue", 
+    "purple", "lightPurple", "yellow", "pink", "orange"
+]
 
 logger.blue()
-logger.send("blue colored text")
+.send("you can do it like this")
+
+logger.blue("or like this")
+.send()
+
+logger.blue("you even can change the color ")
+.red("in the same message, ")
+.green("by chaining colors together!")
+.send()
+
+logger.rainbow("and if you are very funny, use this :)")
+.send()
 ```
 
 #### Add Timestamp
@@ -39,7 +54,7 @@ You can add a prefix to know what type of log you are recieving
 
 ```js
 logger.changeTag("Debug")
-logger.send("This text is a debug") // => [Debug] | This text is a debug
+.send("This text is a debug") // => [Debug] | This text is a debug
 ```
 
 #### Traces
@@ -53,9 +68,20 @@ logger.sendTraced("This text got sent with a trace") // => This text got sent wi
 #### Log into files
 
 ever want to log stuff into a file? now you can with just one line!
+it automatically appends the log on each save
 
 ```js
-logger.save("./log.txt", "This text in a file")
+logger.save("./log.txt", "This text is in a file")
+
+//log.txt:
+//This text is in a file
+
+logger.send("We save this in a context")
+.save("./log.txt")
+
+//log.txt:
+//This text is in a file
+//We save this in a context
 ```
 
 
@@ -67,7 +93,25 @@ const Logger = require('cutesy.js')
 const logger = new Logger()
 
 logger.blue()
-logger.changeTag("Info")
-logger.send("This information gets logged into a file")
-logger.save("./log.txt") //we don't need to define a message since we have a context
+.changeTag("Info")
+.send("This information gets logged into a file")
+.save("./log.txt") //we don't need to define a message since we have a context
+```
+
+#### Tips
+The Logger uses the same Tag, Timestamp and Color unless you want to change it.
+
+```js
+logger.blue()
+.changeTag("Info")
+.addTimestamp("hh:mm:ss")
+.send("I like the color blue") //-> [Info] | 00:55:29 - I like the color blue
+
+logger.send("This stays blue") //-> [Info] | 00:55:29 - This stays blue
+
+logger.red()
+.send("until you change the color") //-> [Info] | 00:55:29 - until you change the color
+
+logger.reset()
+.send("and you can start all over again") //-> and you can start all over again
 ```

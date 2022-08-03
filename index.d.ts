@@ -3,7 +3,7 @@ export = class Logger {
 
     addTimestamp(format: "hh:mm:ss" | "hh:mm" | "mm:ss"): Logger
 
-    changeColor(code: number): Logger
+    changeColor(code: number, message?: string): Logger
 
     changeFont(code: number): Logger
 
@@ -11,35 +11,41 @@ export = class Logger {
 
     save(path: string, message?: string): Logger
 
-    send(message: string): Logger
+    send(message?: string): Logger
 
-    sendTraced(message: string, nesting?: number): Logger
+    sendTraced(message?: string, nesting?: number): Logger
 
-    black(): Logger
+    rainbow(message: string): Logger
 
-    white(): Logger
+    black(message?: string): Logger
 
-    red(): Logger
+    white(message?: string): Logger
 
-    green(): Logger
+    red(message?: string): Logger
+
+    green(message?: string): Logger
     
-    darkGreen(): Logger
+    darkGreen(message?: string): Logger
 
-    darkBlue(): Logger
+    darkBlue(message?: string): Logger
 
-    blue(): Logger
+    blue(message?: string): Logger
 
-    cyan(): Logger
+    cyan(message?: string): Logger
 
-    lightBlue(): Logger
+    purpleBlue(message?: string): Logger
 
-    purple(): Logger
+    lightBlue(message?: string): Logger
 
-    lightPurple(): Logger
+    purple(message?: string): Logger
 
-    yellow(): Logger
+    lightPurple(message?: string): Logger
 
-    pink(): Logger
+    yellow(message?: string): Logger
+
+    pink(message?: string): Logger
+
+    orange(message?: string): Logger
 
     bold(): Logger
 

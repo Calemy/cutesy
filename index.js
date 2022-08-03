@@ -6,6 +6,8 @@ module.exports = class {
         this.time = ""
         this.message = ""
         this.tag = ""
+        this.colors = []
+        this.messages = []
     }
 
     addTimestamp(format){
@@ -36,13 +38,19 @@ module.exports = class {
             Object.debug();
         } catch(ex) {
             const trace = ex.stack?.split("\n", n + 1)[n]?.split("(")[1]?.split(")")[0]
-            if(!trace) return this.sendTraced(message, n-1)
-            return this.send(message + " | " + trace)
+            if(!trace) return this.sendTraced(n-1)
+            if(message == "" || !message) return this.send(" |-> " + trace, true)
+            return this.send(message + " |-> " + trace, true)
         }
     }
 
-    changeColor(code){
+    changeColor(code, message){
         this.color = code
+
+        if(!message) return this
+
+        this.colors.push(code)
+        this.messages.push(message)
         return this
     }
 
@@ -68,65 +76,121 @@ module.exports = class {
             content = ""
         }
 
-        fs.writeFileSync(path, `${content}${this.tag}${this.time}${message}\n`);
+        fs.writeFileSync(path, `${content}${this.tag}${this.time}${this.message}\n`);
+
+        this.message = ""
     }
 
-    send(message){
+    send(msg, trace = false){
+        let message = msg ? msg : ""
+        let init = message
+
+        if(trace){
+            message = ""
+
+            if(init.split("|->")[0].length == 1){
+                for(var i = 0; i < this.colors.length; i++){
+                    message += `\u001b[${this.extra ? this.extra + ";" : ""}38;5;${this.colors[i]}m${this.messages[i]}`
+                }
+                message += init
+            } else {
+                message = init
+            }
+        } else {
+            message = ""
+            if(init.length < 1){
+                for(var i = 0; i < this.colors.length; i++){
+                    message += `\u001b[${this.extra ? this.extra + ";" : ""}38;5;${this.colors[i]}m${this.messages[i]}`
+                }
+            } else {
+                message = init
+            }
+        }
+
         console.log(`\u001b[${this.extra ? this.extra + ";" : ""}38;5;${this.color}m${this.tag}${this.time}${message}\x1b[0m`)
-        this.message = message
+        
+        this.message = init.length < 1 ? this.messages.join("") : init
+
+        this.messages = []
+        this.colors = []
         return this
     }
 
-    black(){
-        return this.changeColor(0)
+    rainbow(message){
+        const colors = ["red", "orange", "yellow", "green", "blue", "darkBlue", "purple"]
+
+        let i = 0
+        let u = 0
+
+        while(u < message.length){
+            if(i % colors.length == 0 && i > 0){
+                i = 0
+            }
+            this[colors[i]](message[u])
+            if(message[u] != " ") i++
+            u++
+        }
+        return this
     }
 
-    white(){
-        return this.changeColor(7)
+    black(message){
+        return this.changeColor(0, message)
     }
 
-    red(){
-        return this.changeColor(9)
+    white(message){
+        return this.changeColor(7, message)
     }
 
-    darkGreen(){
-        return this.changeColor(34)
+    red(message){
+        return this.changeColor(9, message)
     }
 
-    green(){
-        return this.changeColor(47)
+    darkGreen(message){
+        return this.changeColor(34, message)
     }
 
-    darkBlue(){
-        return this.changeColor(69)
+    green(message){
+        return this.changeColor(47, message)
     }
 
-    blue(){
-        return this.changeColor(75)
+    darkBlue(message){
+        return this.changeColor(69, message)
     }
 
-    cyan(){
-        return this.changeColor(86)
+    blue(message){
+        return this.changeColor(75, message)
     }
 
-    lightBlue(){
-        return this.changeColor(123)
+    cyan(message){
+        return this.changeColor(86, message)
     }
 
-    purple(){
-        return this.changeColor(135)
+    purpleBlue(message){
+        return this.changeColor(105, message)
     }
 
-    lightPurple(){
-        return this.changeColor(177)
+    lightBlue(message){
+        return this.changeColor(123, message)
     }
 
-    yellow(){
-        return this.changeColor(191)
+    purple(message){
+        return this.changeColor(141, message)
     }
 
-    pink(){
-        return this.changeColor(206)
+    lightPurple(message){
+        return this.changeColor(177, message)
+    }
+
+    yellow(message){
+        return this.changeColor(191, message)
+    }
+
+    pink(message){
+        return this.changeColor(206, message)
+    }
+
+    orange(message){
+        return this.changeColor(208, message)
     }
 
     bold(){
@@ -147,6 +211,8 @@ module.exports = class {
         this.tag = ""
         this.time = ""
         this.message = ""
+        this.colors = []
+        this.messages = []
         return this
     }
 }

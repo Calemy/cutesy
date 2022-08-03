@@ -2,27 +2,32 @@ async function main(){
     const Logger = require('../index.js')
     const logger = new Logger()
 
-
-    for(color of ["black", "white", "red", "darkGreen", "green", "darkBlue", "blue", "cyan", "lightBlue", "purple", "lightPurple", "yellow", "pink"]){
-        logger[color]()
-        logger.send("This text in " + color)
-    }
-
-    logger.blue()
     logger.addTimestamp("hh:mm:ss")
-    logger.send("This text with timestamp")
-    logger.reset()
-    logger.blue()
+    .blue("This text has a timestamp")
+    .send()
+    .reset()
+    
     logger.changeTag("Information")
-    logger.send("This text with name")
-    logger.reset()
-    logger.blue()
-    logger.sendTraced("This text with trace")
-    logger.addTimestamp("hh:mm:ss")
-    logger.changeTag("Debug")
-    logger.sendTraced("This text with timestamp, name and trace")
+    .blue("This text has a tag")
+    .send()
 
-    logger.save("./log.txt", "This text in a file")
+    logger.sendTraced("This text has a trace")
+
+    logger.addTimestamp("hh:mm:ss")
+    .yellow()
+    .changeTag("Debug")
+    .sendTraced("This text has a timestamp, name and trace")
+    .reset()
+
+    logger.red("R")
+    .green("G")
+    .blue("B")
+    .white(" - Change as much as you want!")
+    .send()
+    .save("./log.txt")
+
+    logger.rainbow("TASTE THE RAINBOW")
+    .send()
 }
 
 main()
