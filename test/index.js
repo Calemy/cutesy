@@ -14,6 +14,7 @@ async function main() {
     logger.setDebug(false);
     logger.log("[purple]This debug text should be hidden because debug is disabled", "DEBUG");
     logger.log("[green]This is a Help message", "HELP");
+    logger.log("[green]This is a Help message", "[yellow]YELLOW_HELP");
 }
 
 main()
