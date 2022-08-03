@@ -13,6 +13,7 @@ async function main() {
     logger.logTraced("[purple]This debug text is in purple", "DEBUG");
     logger.setDebug(false);
     logger.log("[purple]This debug text should be hidden because debug is disabled", "DEBUG");
+    logger.log("[green]This is a Help message", "HELP");
 }
 
 main()

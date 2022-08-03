@@ -55,8 +55,7 @@ module.exports = class {
     }
 
     log(message, logType = "INFO") {
-        const logTypePrefix = logTypes[logType];
-        if (!logTypePrefix) return this.log(`${logType} is not a valid log type`, 'ERROR');
+        const logTypePrefix = logTypes[logType] || logType;
 
         if (!this.debug && logType == "DEBUG") return;
 
