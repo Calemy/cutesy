@@ -1,28 +1,18 @@
-async function main(){
+async function main() {
     const Logger = require('../index.js')
-    const logger = new Logger()
+    const logger = new Logger("cutesy.js")
 
 
-    for(color of ["black", "white", "red", "darkGreen", "green", "darkBlue", "blue", "cyan", "lightBlue", "purple", "lightPurple", "yellow", "pink"]){
-        logger[color]()
-        logger.send("This text in " + color)
+    for (color of ["black", "white", "red", "green", "yellow", "blue", "cyan", "purple"]) {
+        logger.log(`[${color}]This text in ${color}`);
     }
-
-    logger.blue()
-    logger.addTimestamp("hh:mm:ss")
-    logger.send("This text with timestamp")
-    logger.reset()
-    logger.blue()
-    logger.changeTag("Information")
-    logger.send("This text with name")
-    logger.reset()
-    logger.blue()
-    logger.sendTraced("This text with trace")
-    logger.addTimestamp("hh:mm:ss")
-    logger.changeTag("Debug")
-    logger.sendTraced("This text with timestamp, name and trace")
-
-    logger.save("./log.txt", "This text in a file")
+    logger.log("[yellow]This warning text is in yellow", "WARNING");
+    logger.setDateTimeFormat("HH:mm:ss");
+    logger.log("[red]This error text is in red and only time", "ERROR");
+    logger.setDebug(true);
+    logger.logTraced("[purple]This debug text is in purple", "DEBUG");
+    logger.setDebug(false);
+    logger.log("[purple]This debug text should be hidden because debug is disabled", "DEBUG");
 }
 
 main()
