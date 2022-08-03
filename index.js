@@ -75,6 +75,6 @@ module.exports = class {
             return match;
         });
 
-        console.log(`[${logTypePrefixWithReplacedModifiers} | ${dateTime}] ${consoleModifiers.bold}${this.appName}${consoleModifiers.reset} - ${messageWithReplacedModifiers} ${consoleModifiers.reset}`);
+        console.log(`[${this.appName} | ${dateTime}] ${consoleModifiers.bold}${logTypePrefixWithReplacedModifiers}${consoleModifiers.reset} - ${messageWithReplacedModifiers} ${consoleModifiers.reset}`);
     }
 }
