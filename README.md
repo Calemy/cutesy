@@ -1,7 +1,5 @@
-# cutesy
+# cutesy.js 2.0.0
 a cute javascript logger with helpful utility <3
-<br>
-some updates still expected
 
 ## How to use it
 
@@ -9,7 +7,7 @@ some updates still expected
 
 ```js
 const Logger = require('cutesy.js')
-const logger = new Logger()
+const logger = new Logger("My Project") // the String equals your Project name etc.
 ```
 
 #### Change color
@@ -17,29 +15,25 @@ const logger = new Logger()
 You can easily change the color 
 
 ```js
-const colors = ["black", "white", "red", "darkGreen", "green", "darkBlue", "blue", "cyan", "lightBlue", "purple", "lightPurple", "yellow", "pink"]
-
-logger.blue()
-logger.send("blue colored text")
+logger.log("[red]i am red! [blue]now i am blue daba di daba die")
 ```
 
-#### Add Timestamp
+#### set Timestamp format
 
-You want a timestamp added to know when the log was made? No problem!
-We have multiple formats for all needs.
+Update the default timestamp(yyyy-MM-dd HH:mm:ss) to your own format 
 
 ```js
-logger.addTimestamp("hh:mm:ss")
-logger.send("This text has a timestamp") // => 04:31:05 - This text has a timestamp
+logget.setDateTimeFormat("HH:mm:ss");
 ```
 
-#### Prefixes/Names
+#### Debug
 
-You can add a prefix to know what type of log you are recieving
+You can toggle the Debug mode by a simple function
 
 ```js
-logger.changeTag("Debug")
-logger.send("This text is a debug") // => [Debug] | This text is a debug
+logger.setDebug(true/false);
+
+logger.log("[purple][italic]This is a Debug message", 'DEBUG') // This will only print if debug mode is acitve
 ```
 
 #### Traces
@@ -47,27 +41,19 @@ logger.send("This text is a debug") // => [Debug] | This text is a debug
 You don't know where the log comes from? add a stack trace!
 
 ```js
-logger.sendTraced("This text got sent with a trace") // => This text got sent with a trace | /home/cutesy/project/index.js:10:12
-```
-
-#### Log into files
-
-ever want to log stuff into a file? now you can with just one line!
-
-```js
-logger.save("./log.txt", "This text in a file")
+logger.logTraced("This text got sent with a trace") // => This text got sent with a trace |-> /home/cutesy/project/index.js:10:12
 ```
 
 
 #### Example
-Here we want to have a blue color, with the "Info" tag to log into the console, and then into a file.
+You want to print different states of logs.
 
 ```js
 const Logger = require('cutesy.js')
-const logger = new Logger()
+const logger = new Logger("Example")
 
-logger.blue()
-logger.changeTag("Info")
-logger.send("This information gets logged into a file")
-logger.save("./log.txt") //we don't need to define a message since we have a context
+logger.log("This is a Info message", 'INFO')
+logger.log("This is a Warning message", 'WARNING')
+logger.log("This is a Error message", 'ERROR')
+logger.log("This is a Debug message", 'DEBUG')
 ```
