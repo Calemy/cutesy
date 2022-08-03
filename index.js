@@ -69,7 +69,7 @@ module.exports = class {
             }
             return match;
         });
-        const logTypePrefixWithReplacedModifiers = `${logType}`.replace(/\[(.*?)\]/g, (match, color) => {
+        const logTypePrefixWithReplacedModifiers = `${logTypePrefix}`.replace(/\[(.*?)\]/g, (match, color) => {
             if (color in consoleModifiers) {
                 return consoleModifiers[color];
             }
