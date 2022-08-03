@@ -1,152 +1,81 @@
-const fs = require('fs');
+const dateFormat = require('./dateformat');
+const logTypes = {
+    INFO: '[blue]INFO[reset]',
+    WARNING: '[yellow]WARNING[reset]',
+    ERROR: '[red]ERROR[reset]',
+    DEBUG: '[purple]DEBUG[reset]'
+};
+
+const consoleModifiers = {
+    reset: '\x1b[0m',
+    black: '\x1b[30m',
+    white: '\x1b[37m',
+    red: '\x1b[31m',
+    green: '\x1b[32m',
+    yellow: '\x1b[33m',
+    blue: '\x1b[34m',
+    cyan: '\x1b[36m',
+    purple: '\x1b[95m',
+    bold: '\x1b[1m',
+    underline: '\x1b[4m',
+    reversed: '\x1b[7m',
+    italic: '\x1b[3m',
+}
+
 module.exports = class {
-    constructor(){
-        this.color = 0
-        this.extra = 0
-        this.time = ""
-        this.message = ""
-        this.tag = ""
+    constructor(appName) {
+        this.appName = appName;
+        this.dateTimeFormat = "yyyy-MM-dd HH:mm:ss";
+        this.debug = false;
     }
 
-    addTimestamp(format){
-        const d = new Date();
-        const h = d.getHours() < 10 ? '0' + d.getHours() : d.getHours();
-        const m = d.getMinutes() < 10 ? '0' + d.getMinutes() : d.getMinutes();
-        const s = d.getSeconds() < 10 ? '0' + d.getSeconds() : d.getSeconds();
-
-        if(format == "hh:mm:ss"){
-            this.time = `${h}:${m}:${s} - `
-        }
-
-        if(format == "hh:mm"){
-            this.time = `${h}:${m} - `
-        }
-
-        if(format == "mm:ss"){
-            this.time = `${m}:${s} - `
-        }
-
-        return this
+    setAppName(appName) {
+        this.appName = appName;
     }
 
-    sendTraced(message, nesting){
+    setDateTimeFormat(dateTimeFormat) {
+        this.dateTimeFormat = dateTimeFormat;
+    }
+
+    setDebug(debug) {
+        this.debug = debug;
+        if (debug) this.log(`Debug mode is enabled`, 'DEBUG');
+    }
+
+    logTraced(message, logType, nesting) {
         const n = nesting || 2
         const Object = {};
         try {
             Object.debug();
-        } catch(ex) {
+        } catch (ex) {
             const trace = ex.stack?.split("\n", n + 1)[n]?.split("(")[1]?.split(")")[0]
-            if(!trace) return this.sendTraced(message, n-1)
-            return this.send(message + " | " + trace)
+            if (!trace) this.sendTraced(message, logType, n - 1)
+            this.log(message + " |-> " + trace, logType);
         }
     }
 
-    changeColor(code){
-        this.color = code
-        return this
-    }
+    log(message, logType = "INFO") {
+        const logTypePrefix = logTypes[logType];
+        if (!logTypePrefix) return this.log(`${logType} is not a valid log type`, 'ERROR');
 
-    changeFont(code){
-        this.extra = code
-        return this
-    }
+        if (!this.debug && logType == "DEBUG") return;
 
-    changeTag(tag){
-        if(tag) this.tag = `[${tag}] | `
-        return this
-    }
+        const date = new Date();
+        const dateTime = dateFormat(date, this.dateTimeFormat);
 
-    save(path, message){
-        if(message) this.message = message
-        if(this.message == "") return this
+        const messageWithReplacedModifiers = message.replace(/\[(.*?)\]/g, (match, color) => {
+            if (color in consoleModifiers) {
+                return consoleModifiers[color];
+            }
+            return match;
+        });
+        const logTypePrefixWithReplacedModifiers = `${logType}`.replace(/\[(.*?)\]/g, (match, color) => {
+            if (color in consoleModifiers) {
+                return consoleModifiers[color];
+            }
+            return match;
+        });
 
-        let content;
-
-        try {
-            content = fs.readFileSync(path, 'utf8');
-        } catch {
-            content = ""
-        }
-
-        fs.writeFileSync(path, `${content}${this.tag}${this.time}${message}\n`);
-    }
-
-    send(message){
-        console.log(`\u001b[${this.extra ? this.extra + ";" : ""}38;5;${this.color}m${this.tag}${this.time}${message}\x1b[0m`)
-        this.message = message
-        return this
-    }
-
-    black(){
-        return this.changeColor(0)
-    }
-
-    white(){
-        return this.changeColor(7)
-    }
-
-    red(){
-        return this.changeColor(9)
-    }
-
-    darkGreen(){
-        return this.changeColor(34)
-    }
-
-    green(){
-        return this.changeColor(47)
-    }
-
-    darkBlue(){
-        return this.changeColor(69)
-    }
-
-    blue(){
-        return this.changeColor(75)
-    }
-
-    cyan(){
-        return this.changeColor(86)
-    }
-
-    lightBlue(){
-        return this.changeColor(123)
-    }
-
-    purple(){
-        return this.changeColor(135)
-    }
-
-    lightPurple(){
-        return this.changeColor(177)
-    }
-
-    yellow(){
-        return this.changeColor(191)
-    }
-
-    pink(){
-        return this.changeColor(206)
-    }
-
-    bold(){
-        return this.changeFont(1)
-    }
-
-    underline(){
-        return this.changeFont(4)
-    }
-
-    reversed(){
-        return this.changeFont(7)
-    }
-
-    reset(){
-        this.color = 0
-        this.extra = 0
-        this.tag = ""
-        this.time = ""
-        this.message = ""
-        return this
+        console.log(`[${logTypePrefixWithReplacedModifiers} | ${dateTime}] ${consoleModifiers.bold}${this.appName}${consoleModifiers.reset} - ${messageWithReplacedModifiers} ${consoleModifiers.reset}`);
     }
 }
