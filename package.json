@@ -1,6 +1,6 @@
 {
   "name": "cutesy.js",
-  "version": "1.1.4",
+  "version": "2.0.0",
   "description": "a cute color logger",
   "main": "index.js",
   "directories": {
@@ -25,8 +25,5 @@
   "bugs": {
     "url": "https://github.com/calemy/cutesy/issues"
   },
-  "homepage": "https://github.com/calemy/cutesy#readme",
-  "dependencies": {
-    "fs": "^0.0.1-security"
-  }
+  "homepage": "https://github.com/calemy/cutesy#readme"
 }
