@@ -123,9 +123,7 @@ module.exports = class {
         let u = 0
 
         while(u < message.length){
-            if(i % colors.length == 0 && i > 0){
-                i = 0
-            }
+            if(i == colors.length - 1) i = 0
             this[colors[i]](message[u])
             if(message[u] != " ") i++
             u++
