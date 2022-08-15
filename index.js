@@ -19,17 +19,17 @@ module.exports = class {
 
         if(format == "hh:mm:ss"){
             this.time = `${h}:${m}:${s} - `
-            this.format == format
+            this.format = format
         }
 
         if(format == "hh:mm"){
             this.time = `${h}:${m} - `
-            this.format == format
+            this.format = format
         }
 
         if(format == "mm:ss"){
             this.time = `${m}:${s} - `
-            this.format == format
+            this.format = format
         }
 
         return this

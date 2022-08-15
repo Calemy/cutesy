@@ -17,7 +17,10 @@ async function main(){
     .yellow()
     .changeTag("Debug")
     .sendTraced("This text has a timestamp, name and trace")
-    .reset()
+
+    setTimeout(() =>{
+        logger.send("This text has a timestamp")
+    }, 1000)
 
     logger.red("R")
     .green("G")
