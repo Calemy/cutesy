@@ -8,6 +8,7 @@ module.exports = class {
         this.tag = ""
         this.colors = []
         this.messages = []
+        this.format = ""
     }
 
     addTimestamp(format){
@@ -18,14 +19,17 @@ module.exports = class {
 
         if(format == "hh:mm:ss"){
             this.time = `${h}:${m}:${s} - `
+            this.format == format
         }
 
         if(format == "hh:mm"){
             this.time = `${h}:${m} - `
+            this.format == format
         }
 
         if(format == "mm:ss"){
             this.time = `${m}:${s} - `
+            this.format == format
         }
 
         return this
@@ -84,6 +88,8 @@ module.exports = class {
     send(msg, trace = false){
         let message = msg ? msg : ""
         let init = message
+
+        if(this.format) this.addTimestamp(this.format)
 
         if(trace){
             message = ""
