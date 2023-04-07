@@ -63,8 +63,8 @@ module.exports = class {
         return this
     }
 
-    changeTag(tag, length = tag.length + 2){
-        if(tag) this.tag = `${`[${tag}]`.padStart(length)} | `
+    changeTag(tag, length = tag.length){
+        if(tag) this.tag = `${`[${tag}]`.padEnd(length+2)} | `
         return this
     }
 
