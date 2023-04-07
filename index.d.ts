@@ -7,7 +7,7 @@ export = class Logger {
 
     changeFont(code: number): Logger
 
-    changeTag(tag: string): Logger
+    changeTag(tag: string, length?: int): Logger
 
     save(path: string, message?: string): Logger
 
@@ -15,7 +15,7 @@ export = class Logger {
 
     sendTraced(message?: string, nesting?: number): Logger
 
-    rainbow(message: string): Logger
+    rainbow(message: string, colors?: string[]): Logger
 
     black(message?: string): Logger
 

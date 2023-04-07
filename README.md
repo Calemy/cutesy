@@ -57,6 +57,18 @@ logger.changeTag("Debug")
 .send("This text is a debug") // => [Debug] | This text is a debug
 ```
 
+Using multiple Logger in the same console can look good :-)
+
+```js
+logger1.changeTag("Debug", 12) // 12 is the minimum Length of the Tag (before " | ")
+.send("This text is a debug"); // => [Debug]      | This text is a debug
+
+logger2.changeTag("Prodcution", 12)
+.send("This text is a debug"); // => [Prodcution] | This text is a debug
+
+logger3.changeTag("Test", 12)
+.send("This text is a debug"); // => [Test]       | This text is a debug
+
 #### Traces
 
 You don't know where the log comes from? add a stack trace!

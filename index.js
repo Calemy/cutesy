@@ -63,8 +63,8 @@ module.exports = class {
         return this
     }
 
-    changeTag(tag){
-        if(tag) this.tag = `[${tag}] | `
+    changeTag(tag, length = tag.length + 2){
+        if(tag) this.tag = `${`[${tag}]`.padStart(length)} | `
         return this
     }
 
@@ -122,8 +122,7 @@ module.exports = class {
         return this
     }
 
-    rainbow(message){
-        const colors = ["red", "orange", "yellow", "green", "blue", "darkBlue", "purple"]
+    rainbow(message, colors = ["red", "orange", "yellow", "green", "blue", "darkBlue", "purple"]){
 
         let i = 0
         let u = 0
